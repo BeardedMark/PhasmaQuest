@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Простая админка ESP</title>
+  </head>
+  <body>
+    <label
+      >Message:
+      <input type="text" id="message" placeholder="впишите сообщение" /></label
+    ><br />
+    <button onclick="sendCommand()">Отправить</button>
+
+    <script>
+      const ws = new WebSocket("ws://localhost:8080");
+
+      ws.onopen = () => console.log("WebSocket подключен");
+      ws.onclose = () => console.log("WebSocket отключен");
+      ws.onmessage = (event) => console.log("Получено: " + event.data);
+
+      function sendCommand() {
+        const message = document.getElementById("message").value.trim();
+        ws.send(message);
+      }
+    </script>
+  </body>
+</html>

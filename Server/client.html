@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>WebSocket тест</h2>
+    <input id="msg" placeholder="Напиши сообщение" />
+    <button onclick="sendMsg()">Отправить</button>
+    <pre id="log"></pre>
+
+    <script>
+      const log = document.getElementById("log");
+      const socket = new WebSocket("ws://localhost:8080");
+
+      socket.addEventListener("open", () => {
+        log.textContent += "Соединение открыто\n";
+      });
+
+      socket.addEventListener("message", (event) => {
+        log.textContent += "Сервер: " + event.data + "\n";
+      });
+
+      function sendMsg() {
+        const msg = document.getElementById("msg").value;
+        socket.send(msg);
+        log.textContent += "Вы: " + msg + "\n";
+      }
+    </script>
+  </body>
+</html>
